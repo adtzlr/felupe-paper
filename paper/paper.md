@@ -24,8 +24,16 @@ bibliography: paper.bib
 ---
 
 # Summary
-Some text.
+FElupe is a Python 3 finite element analysis package focusing on the formulation and numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
 
-# Statement of need
+## Highlights
+- 100% Python package built with NumPy and SciPy
+- easy to learn and productive high-level API
+- nonlinear deformation of solid bodies
+- interactive views on meshes, fields and solid bodies (using PyVista)
+- typical finite elements
+- cartesian, axisymmetric, plane strain and mixed fields
+- hyperelastic material models
+- strain energy density functions with automatic differentiation
 
 # References
