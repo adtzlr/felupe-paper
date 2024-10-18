@@ -36,6 +36,8 @@ FElupe is a Python package for finite element analysis focusing on the formulati
 - hyperelastic material models
 - strain energy density functions with automatic differentiation
 
+Efficient NumPy-based math is realized by element-wise operating trailing axes [@scikitfem]. The finite element method, as used in FElupe, is based on [@bonetwood], [@bathe] and [@zienkiewicz].
+
 The essential high-level parts of solving problems with FElupe contain a mesh, a numeric region, one or more fields, a constitutive material formulation, a solid body, a dict of boundary conditions, a step and a job. For example, consider a quarter model of a solid cube with hyperelastic material behaviour subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. A vector-valued displacement field is initiated on the region and is further added to a field container. A uniaxial load case is applied on the displacement field and creates the boundary conditions. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped, i.e. its displacements, except the components in longitudinal direction, are fixed. An isotropic hyperelastic Neo-Hookean material formulation is applied on the displacement field of a solid body. A step generates the consecutive substep-movements of a given boundary condition. The step is further added to a list of steps of a job. During evaluation, each substep of each step is solved by Newton's method and the field values are updated in-place. Finally, the maximum principal values of logarithmic strain of the last completed substep are plotted.
 
 ```python
@@ -53,9 +55,22 @@ job = fem.Job(steps=[step]).evaluate()
 solid.plot("Principal Values of Logarithmic Strain").show()
 ```
 
-Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model, most easily by its strain energy density function. All built-in hyperelastic material models provide a plot-method to visualize force-stretch curves for the homogeneous load cases uniaxial and equi-biaxial tension as well as planar shear.
+Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. All built-in hyperelastic material models provide a plot-method to visualize force-stretch curves for the homogeneous load cases uniaxial and equi-biaxial tension as well as planar shear.
+
+```python
+import tensortrax.math as tm
+
+def mooney_rivlin(C, C10, C01):
+    I1 = tm.trace(C)
+    I2 = (I1**2 - tm.trace(C @ C)) / 2
+    I3 = tm.linalg.det(C)
+    return C10 * (I3**(-1/3) * I1 - 3) + C01 * (I3**(-2/3) * I2 - 3)
+
+umat = fem.Hyperelastic(mooney_rivlin, C10=0.5, C01=0.1)
+solid = fem.SolidBody(umat=umat, field=field)
+```
 
 # Examples
-The documentation of FElupe contains many interactive tutorials and examples. Resulting deformed solid bodies of some of these examples are shown in Fig. 1. Several scientific publications include computational results of FElupe, e.g. XX, YY.
+The documentation of FElupe contains many interactive tutorials and examples. Resulting deformed solid bodies of selected examples are shown in Fig. 1. Several scientific publications include computational results of FElupe, e.g. XX, YY.
 
 # References
