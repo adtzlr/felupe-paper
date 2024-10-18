@@ -24,7 +24,7 @@ bibliography: paper.bib
 ---
 
 # Summary
-FElupe is a Python 3 finite element analysis package focusing on the formulation and numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
+FElupe is a Python package for finite element analysis focusing on the formulation and numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
 
 ## Highlights
 - 100% Python package built with NumPy and SciPy
@@ -35,5 +35,22 @@ FElupe is a Python 3 finite element analysis package focusing on the formulation
 - cartesian, axisymmetric, plane strain and mixed fields
 - hyperelastic material models
 - strain energy density functions with automatic differentiation
+
+The essential high-level parts of solving problems with FElupe contain a mesh, a numeric region, one or more fields, a constitutive material formulation, a solid body, a dict of boundary conditions, a step and a job. For example, consider a quarter model of a solid cube with hyperelastic material behaviour subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. A vector-valued displacement field is initiated on the region and is further added to a field container. A uniaxial load case is applied on the displacement field. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped: only its displacements in the longitudinal direction are allowed. A dict of boundary conditions is created for this pre-defined load case. An isotropic hyperelastic Neo-Hookean material formulation is applied on the displacement field of a nearly-incompressible solid body. A step generates the consecutive substep-movements of a given boundary condition. The step is further added to a list of steps of a job. During evaluation, each substep of each step is solved by Newton's method. Finally, the maximum principal values of logarithmic strain of the last completed substep are plotted.
+
+```python
+import felupe as fem
+
+region = fem.RegionHexahedron(mesh=fem.Cube(n=6))
+field = fem.FieldContainer([fem.Field(region, dim=3)])
+solid = fem.SolidBody(umat=fem.NeoHooke(mu=1, bulk=2), field=field)
+boundaries, loadcase = fem.dof.uniaxial(field, clamped=True)
+
+move = fem.math.linsteps([0, 1], num=5)
+step = fem.Step([solid], ramp={boundaries["move"]: move}, boundaries=boundaries)
+job = fem.Job(steps=[step]).evaluate()
+
+solid.plot("Principal Values of Logarithmic Strain").show()
+```
 
 # References
