@@ -71,6 +71,6 @@ solid = fem.SolidBody(umat=umat, field=field)
 ```
 
 # Examples
-The documentation of FElupe contains many interactive tutorials and examples. Resulting deformed solid bodies of selected examples are shown in Fig. 1. Several scientific publications include computational results of FElupe, e.g. XX, YY.
+The documentation of FElupe contains many interactive tutorials and examples. Resulting deformed solid bodies of selected examples are shown in Fig. 1. Several scientific publications include computational results of FElupe, e.g. [@dutzler2021], [@torggler2023].
 
 # References
