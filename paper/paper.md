@@ -84,7 +84,7 @@ solid = fem.SolidBody(umat=umat, field=field)
 ```
 
 # Examples
-The documentation of FElupe contains many interactive tutorials and examples. Resulting deformed solid bodies of selected examples are shown in \autoref{fig:examples}. Several scientific publications use computational results of FElupe, e.g. [@dutzler2021], [@torggler2023].
+The documentation of FElupe contains interactive tutorials and examples for simulating the deformation of solid bodies. Resulting deformed solid bodies of selected examples are shown in \autoref{fig:examples}. Computational results of FElupe are used in several scientific publications, e.g. [@dutzler2021], [@torggler2023].
 
 ![Equivalent stress distribution of a plate with a hole (top left). Shear-loaded hyperelastic block (top middle). Endurable cycles obtained by local stresses (top right). Multiaxially loaded rubber bushing (bottom left). Rotating rubber wheel on a frictionless contact (bottom middle). A hyperelastic solid with frictionless rigid contacts (bottom right).\label{fig:examples}](examples.png)
 
