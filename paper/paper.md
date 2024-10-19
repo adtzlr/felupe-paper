@@ -24,7 +24,8 @@ bibliography: paper.bib
 ---
 
 # Summary
-FElupe is a Python package for finite element analysis focusing on the formulation and numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
+FElupe is a Python package for finite element analysis focusing on the formulation and
+numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
 
 ## Highlights
 - 100% Python package built with NumPy and SciPy
@@ -38,7 +39,7 @@ FElupe is a Python package for finite element analysis focusing on the formulati
 
 Efficient NumPy-based math is realized by element-wise operating trailing axes [@scikitfem]. The finite element method, as used in FElupe, is based on [@bonetwood], [@bathe] and [@zienkiewicz]. Interactive views are enabled by PyVista [@pyvista]. The capabilities of FElupe may be enhanced with additional Python packages, e.g. `meshio` [@meshio], `matadi` [@matadi], `tensortrax` [@tensortrax], `hyperelastic` [@hyperelastic] or `feplot` [@feplot].
 
-The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region and a quadrature scheme, see \autoref{fig:field}. In a solid body, this field container is combined with a constitutive material formulation. Along with constant and ramped boundary conditions a step is created. During job evaluation, the field values are updated in-place as shown in \autoref{fig:job}.
+The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region and a quadrature scheme, see \autoref{fig:field}. In a solid body, this field container is combined with a constitutive material formulation. Along with constant and ramped boundary conditions a step is created. During job evaluation, the field values are updated in-place after each completed substep as shown in \autoref{fig:job}.
 
 ![Schematic representation of classes needed to create a field container.\label{fig:field}](field.pdf)
 
@@ -51,7 +52,7 @@ import felupe as fem
 
 region = fem.RegionHexahedron(mesh=fem.Cube(n=6))
 field = fem.FieldContainer([fem.Field(region, dim=3)])
-solid = fem.SolidBody(umat=fem.NeoHooke(mu=1, bulk=2), field=field)
+solid = fem.SolidBody(umat=fem.NeoHookeCompressible(mu=1, lmbda=2), field=field)
 boundaries, loadcase = fem.dof.uniaxial(field, clamped=True)
 
 move = fem.math.linsteps([0, 1], num=5)
