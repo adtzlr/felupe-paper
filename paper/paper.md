@@ -38,13 +38,13 @@ FElupe is a Python package for finite element analysis focusing on the formulati
 
 Efficient NumPy-based math is realized by element-wise operating trailing axes [@scikitfem]. The finite element method, as used in FElupe, is based on [@bonetwood], [@bathe] and [@zienkiewicz]. Interactive views are enabled by PyVista [@pyvista]. The capabilities of FElupe may be enhanced with additional Python packages, e.g. `meshio` [@meshio], `matadi` [@matadi], `tensortrax` [@tensortrax], `hyperelastic` [@hyperelastic] or `feplot` [@feplot].
 
-The essential high-level parts of solving problems with FElupe include a field, items like a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region and a quadrature scheme, see \autoref{fig:field} and see \autoref{fig:job}.
+The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region and a quadrature scheme, see \autoref{fig:field}. In a solid body, this field container is combined with a constitutive material formulation. Along with constant and ramped boundary conditions a step is created. During job evaluation, the field values are updated in-place as shown in \autoref{fig:job}.
 
-![Schematic representation of classes to create a region, fields and a field container.\label{fig:field}](field.pdf)
+![Schematic representation of classes needed to create a field container.\label{fig:field}](field.pdf)
 
-![Schematic representation of classes to create a job.\label{fig:job}](job.pdf)
+![Schematic representation of classes needed to evaluate a job.\label{fig:job}](job.pdf)
 
-For example, consider a quarter model of a solid cube with hyperelastic material behaviour subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. A vector-valued displacement field is initiated on the region and is further added to a field container. A uniaxial load case is applied on the displacement field and creates the boundary conditions. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped, i.e. its displacements, except the components in longitudinal direction, are fixed. An isotropic hyperelastic Neo-Hookean material formulation is applied on the displacement field of a solid body. A step generates the consecutive substep-movements of a given boundary condition. The step is further added to a list of steps of a job. During evaluation, each substep of each step is solved by Newton's method and the field values are updated in-place. Finally, the maximum principal values of logarithmic strain of the last completed substep are plotted.
+For example, consider a quarter model of a solid cube with hyperelastic material behaviour subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. The appropriate finite element and its quadrature scheme are chosen automatically. A vector-valued displacement field is initiated on the region and is further added to a field container. A uniaxial load case is applied on the displacement field to create the boundary conditions. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped, i.e. its displacements, except the components in longitudinal direction, are fixed. An isotropic hyperelastic Neo-Hookean material formulation is applied on the displacement field of a solid body. A step generates the consecutive substep-movements of a selected boundary condition. The step is further added to a list of steps of a job. After the job evaluation is completed, the maximum principal values of logarithmic strain of the last completed substep are plotted.
 
 ```python
 import felupe as fem
@@ -61,7 +61,12 @@ job = fem.Job(steps=[step]).evaluate()
 solid.plot("Principal Values of Logarithmic Strain").show()
 ```
 
-Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. All built-in hyperelastic material models provide a plot-method to visualize force-stretch curves for the homogeneous load cases uniaxial and equi-biaxial tension as well as planar shear.
+Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material in FElupe.
+
+\begin{equation}
+    \label{eq:mooney-rivlin}
+    \psi(\boldsymbol{C}) = C_{10} \left( \hat{I}_1 - 3 \right) + C_{01} \left( \hat{I}_2 - 3 \right)
+\end{equation}
 
 ```python
 import tensortrax.math as tm
