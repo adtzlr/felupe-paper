@@ -25,11 +25,11 @@ bibliography: paper.bib
 
 # Summary
 FElupe is a Python package for finite element analysis focusing on the formulation and
-numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies.
+numerical solution of nonlinear problems in continuum mechanics of solid bodies. This package is intended for scientific research, but is also suitable for running nonlinear simulations in general. In addition to the transformation of general weak forms into sparse vectors and matrices, FElupe provides an efficient high-level abstraction layer for the simulation of the deformation of solid bodies. The finite element method, as used in FElupe, is based on [@bonetwood], [@bathe] and [@zienkiewicz].
 
 ## Highlights
 - 100% Python package built with NumPy and SciPy
-- easy to learn and productive high-level API
+- easy-to-learn and productive high-level API
 - nonlinear deformation of solid bodies
 - interactive views on meshes, fields and solid bodies
 - typical finite elements
@@ -37,14 +37,17 @@ numerical solution of nonlinear problems in continuum mechanics of solid bodies.
 - hyperelastic material models
 - strain energy density functions with automatic differentiation
 
-Efficient NumPy-based math is realized by element-wise operating trailing axes [@scikitfem]. The finite element method, as used in FElupe, is based on [@bonetwood], [@bathe] and [@zienkiewicz]. Interactive views are enabled by PyVista [@pyvista]. The capabilities of FElupe may be enhanced with additional Python packages, e.g. `meshio` [@meshio], `matadi` [@matadi], `tensortrax` [@tensortrax], `hyperelastic` [@hyperelastic] or `feplot` [@feplot].
+# Statement of need
+There are well-established Python packages available for finite element analysis, but these packages are either distributed as binary packages or need to be compiled on installation, like FEniCSx [@fenicsx], GetFEM [@getfem] or SfePy [@sfepy]. FElupe is a pure Python package and hence, no compilation is required. `scikit-fem` [@scikitfem] follows a similar concept as pure Python package with minimal dependencies but with a much more general scope [@scikitfem]. The performance of FElupe as non-compiled package is worse in comparison to compiled codes but is still well-suited for up to mid-sized problems, i.e. around $10^5$ degrees of freedom, when basic hyperelastic model formulations are used. An exemplaric performance benchmark for times spent on stiffness matrix assembly is included in the documentation. Internally, efficient NumPy-based math is realized by element-wise operating trailing axes [@scikitfem]. An all-at-once approach per operation is used instead of the more common cell-by-cell evaluation mode. The constitutive material formulation class is backend agnostic: it provides NumPy-arrays as input arguments and requires NumPy-arrays as return values. This enables backends like JAX [@jax] or PyTorch [@pytorch]. Interactive views of meshes, fields and solid bodies are enabled by PyVista [@pyvista]. The capabilities of FElupe may be enhanced with additional Python packages, e.g. `meshio` [@meshio], `matadi` [@matadi], `tensortrax` [@tensortrax], `hyperelastic` [@hyperelastic] or `feplot` [@feplot].
+
+
 
 # Features
 The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region, see \autoref{fig:field}.
 
 ![Schematic representation of classes needed to create a field container.\label{fig:field}](field.pdf)
 
-In a solid body, this field container is combined with a constitutive material formulation. Along with constant and ramped boundary conditions a step is created. During job evaluation, the field values are updated in-place after each completed substep as shown in \autoref{fig:job}.
+In a solid body, a constitutive material formulation is applied on this field container. Along with constant and ramped boundary conditions a step is created. During job evaluation, the field values are updated in-place after each completed substep as shown in \autoref{fig:job}.
 
 ![Schematic representation of classes needed to evaluate a job.\label{fig:job}](job.pdf)
 
