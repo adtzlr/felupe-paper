@@ -65,7 +65,7 @@ Any other hyperelastic material model formulation may be used instead of the Neo
 
 \begin{equation}
     \label{eq:mooney-rivlin}
-    \psi(\bm{C}) = C_{10} \left( \hat{I}_1 - 3 \right) + C_{01} \left( \hat{I}_2 - 3 \right)
+    \psi(\boldsymbol{C}) = C_{10} \left( \hat{I}_1 - 3 \right) + C_{01} \left( \hat{I}_2 - 3 \right)
 \end{equation}
 
 ```python
