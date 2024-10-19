@@ -61,11 +61,11 @@ job = fem.Job(steps=[step]).evaluate()
 solid.plot("Principal Values of Logarithmic Strain").show()
 ```
 
-Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material in FElupe.
+Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe.
 
 \begin{equation}
     \label{eq:mooney-rivlin}
-    \psi(\boldsymbol{C}) = C_{10} \left( \hat{I}_1 - 3 \right) + C_{01} \left( \hat{I}_2 - 3 \right)
+    \psi(\bm{C}) = C_{10} \left( \hat{I}_1 - 3 \right) + C_{01} \left( \hat{I}_2 - 3 \right)
 \end{equation}
 
 ```python
