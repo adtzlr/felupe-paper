@@ -72,7 +72,7 @@ solid.plot("Principal Values of Logarithmic Strain").show()
 
 ![Final logarithmic strain distribution of the deformed hyperelastic solid body at $l/L=2$. The undeformed configuration is shown in transparent grey.\label{fig:strain}](strain.png){height="50mm"}
 
-Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe.
+Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe with the help of `tensortrax` (bundled with FElupe).
 
 \begin{equation}
     \label{eq:mooney-rivlin}
