@@ -41,7 +41,7 @@ The performance of FElupe [is good for a non-compiled package but mediocre]{.mar
 
 
 # Features
-The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a numeric region, see \autoref{fig:field}.
+The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. With the combination of a mesh, a finite element formulation and a quadrature rule, a numeric region is created. A field for a field container is further created on top of this numeric region, see \autoref{fig:field}.
 
 ![Schematic representation of classes needed to create a field container.\label{fig:field}](field.pdf)
 
@@ -49,7 +49,11 @@ In a solid body, a constitutive material formulation is applied on this field co
 
 ![Schematic representation of classes needed to evaluate a job.\label{fig:job}](job.pdf)
 
-For example, consider a quarter model of a solid cube with nearly-incompressible hyperelastic material behavior subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. The appropriate finite element and its quadrature scheme are chosen automatically. A vector-valued displacement field is initiated on the region and is further added to a field container. A uniaxial load case is applied on the displacement field to create the boundary conditions. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped, i.e. its displacements, except the components in longitudinal direction, are fixed. An isotropic hyperelastic [Neo-Hookean material formulation]{.mark} [@treloar], [@bonetwood] is applied on the displacement field of a solid body. A step generates the consecutive substep-movements of a selected boundary condition. The step is further added to a list of steps of a job. After the job evaluation is completed, the maximum principal values of logarithmic strain of the last completed substep are plotted, see \autoref{fig:strain}.
+For example, consider a quarter model of a solid cube with nearly-incompressible hyperelastic material behavior subjected to a uniaxial elongation applied at a clamped end-face. First, a meshed cube out of hexahedron cells is created. A numeric region, pre-defined for hexahedrons, is created on the mesh. The appropriate finite element and its quadrature scheme are chosen automatically. A vector-valued displacement field is initiated on the region and is further added to a field container.
+
+A uniaxial load case is applied on the displacement field to create the boundary conditions. This involves setting up symmetry planes as well as the absolute value of the prescribed displacement at the mesh-points on the right-end face of the cube. The right-end face is clamped, i.e. its displacements are [fixed, except for the components in longitudinal direction]{.mark}. An isotropic hyperelastic [Neo-Hookean material formulation]{.mark} [@treloar], [@bonetwood] is applied on the displacement field of a solid body. A step generates the consecutive substep-movements of a selected boundary condition. The step is further added to a list of steps of a job. After the job evaluation is completed, the maximum principal values of logarithmic strain of the last completed substep are plotted, see \autoref{fig:strain}.
+
+\newpage
 
 ```python
 import felupe as fem
