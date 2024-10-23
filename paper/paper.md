@@ -41,7 +41,7 @@ The performance of FElupe [is good for a non-compiled package but mediocre]{.mar
 
 
 # Features
-The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a mesh, a numeric region, see \autoref{fig:field}.
+The essential high-level parts of solving problems with FElupe include a field, a solid body, boundary conditions and a job. A field for a field container is created by a numeric region, see \autoref{fig:field}.
 
 ![Schematic representation of classes needed to create a field container.\label{fig:field}](field.pdf)
 
@@ -66,7 +66,7 @@ job = fem.Job(steps=[step]).evaluate()
 solid.plot("Principal Values of Logarithmic Strain").show()
 ```
 
-![Final logarithmic strain distribution of the deformed hyperelastic solid body at a stretch $l/L=2$[, where $l$ is the deformed length and $L$ the undeformed length of the body]{.mark}. The undeformed configuration is shown in transparent grey.\label{fig:strain}](strain.png){height=40mm}
+![Final logarithmic strain distribution of the deformed hyperelastic solid body at a stretch $l/L=2$[, where $l$ is the deformed length and $L$ the undeformed length of the solid body in longitudinal direction]{.mark}. The undeformed configuration is shown in transparent grey.\label{fig:strain}](strain.png){height=40mm}
 
 Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the [Mooney-Rivlin material model formulation]{.mark} [@mooney], [@rivlin], as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe with the help of `tensortrax` (bundled with FElupe).
 
