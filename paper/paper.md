@@ -57,7 +57,7 @@ For example, consider a quarter model of a solid cube with hyperelastic material
 
 : Final logarithmic strain distribution of the deformed hyperelastic solid body at a stretch $l/L=2$[, where $l$ is the deformed length and $L$ the undeformed length of the body]{.mark}. The undeformed configuration is shown in transparent grey.[](\label{fig:strain})
 
-Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the Mooney-Rivlin material model formulation [[@mooney], [@rivlin]]{.mark}, as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe with the help of `tensortrax` (bundled with FElupe).
+Any other hyperelastic material model formulation may be used instead of the Neo-Hookean material model given above, most easily by its strain energy density function. The strain energy density function of the [Mooney-Rivlin material model formulation]{.mark} [@mooney], [@rivlin], as given in \autoref{eq:mooney-rivlin}, is implemented by a hyperelastic material class in FElupe with the help of `tensortrax` (bundled with FElupe).
 
 \begin{equation}
     \label{eq:mooney-rivlin}
